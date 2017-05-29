@@ -1,0 +1,78 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/chessboard-0.3.0.css"/>
+    <script type="text/javascript" src="js/chessboard-0.3.0.js" > </script>
+    <script src="https://code.jquery.com/jquery-1.10.1.js"></script>
+</head>
+<body >
+    <div id="board1" style="width: 400px"></div>  
+</body>
+<script type="text/javascript">
+
+var init = function() {
+var cfg = {
+  draggable: true,
+  dropOffBoard: 'snapback', // this is the default
+  position: 'start'
+};
+
+var board = new ChessBoard('board1', cfg);
+};
+$(document).ready(init);
+</script>
+
+</html>
+
+<!--Notes about how chessboard.js works:
+
+va board = ChessBoard('boardId') //For these examples
+
+   General:
+        - A board is usually initalized with a cfg object. 
+        ex) var board = ChessBoard('board', {
+                draggable: true,
+                dropOffBoard: 'trash',
+                sparePieces: true
+                })
+        - Events such as onChange, onDrop, onSnapbackEnd, and more are
+        availble for use, perhapse a good place for custom game logic.
+        - A guide for only allowing legal move exists here: http://chessboardjs.com/examples#5000
+        but one can pick and pull from this example. Note on the example's
+        "onDrop" function uses a game.move() where game is a "Chess" object.
+        To allow for bughouse logic, stand alone logic needs to be written or game.move() 
+        needs to be worked with. (The logic for game.move is under "Chess Util Functions"
+        in chessboard.js)
+   Board:
+        - The board's state is contained in a js object where
+        the keys are the squares with a piece and the value is
+        the piece. Set the board with "board = new ChessBoard('board', FENPositionString)"
+        or "board = new ChessBoard('board', positionObject)"
+        - For a complicate position (or any with a lot of pieces
+        on the board) a FEN string can be used to set the position.
+        Basically, this notation describes the board from white's
+        perspective, it starts at the top of the board (rank 8) and
+        lists the order that the pieces are in for that row, with a 
+        number between representing spaces without pieces if there are any,
+        then goes down to the bottom (rank 1). ex) Start postion in FEN:
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+        (https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+        for more information)
+        - chessboard.js will also store PGN (Portable Game Notation). This
+        notation represents the game's state with the moves made in the game.
+        (https://en.wikipedia.org/wiki/Portable_Game_Notation for more information.)
+        - Orientation is gotten with board.orientation()
+        - Orientation is set with board.orientation("white") or 
+        board.orientation("black") and flipped with board.flip
+        - Board is killed with board.destory
+
+    Pieces:
+        - Pieces can be moved by using "board.move()" where board is a 
+        ChessBoard and you pass in the piece's location and destination.
+        ex) board.move('e2-e4');
+        - For multiple pieces at once just pass 2 strings in at once.
+        ex) board.move('d2-d4', 'g8-f6');
+        - Spare pieces are easily availible by setting "sparePieces" to 
+        true in the config. There should be ways we man manually show or hide
+        these pieces.
+-->
